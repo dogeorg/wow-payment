@@ -3,6 +3,8 @@ package database
 import (
 	"database/sql"
 
+	"github.com/dogeorg/wow-payment/internal/models"
+
 	_ "github.com/mattn/go-sqlite3"
 )
 
@@ -36,7 +38,7 @@ func InitDB(dbPath string) (*sql.DB, error) {
 	return db, err
 }
 
-func InsertShibe(db *sql.DB, shibe RegistrationRequest) (int64, error) {
+func InsertShibe(db *sql.DB, shibe models.RegistrationRequest) (int64, error) {
 	stmt, err := db.Prepare(`
         INSERT INTO shibes (name, email, country, address, postalCode, dogeAddress, size, 
             bname, bemail, bcountry, baddress, bpostalCode, amount, paytoDogeAddress) 

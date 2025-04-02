@@ -9,24 +9,8 @@ import (
 
 	"github.com/dogeorg/wow-payment/internal/config"
 	"github.com/dogeorg/wow-payment/internal/database"
+	"github.com/dogeorg/wow-payment/internal/models"
 )
-
-type RegistrationRequest struct {
-	Name        string  `json:"name"`
-	Email       string  `json:"email"`
-	Country     string  `json:"country"`
-	Address     string  `json:"address"`
-	PostalCode  string  `json:"postalCode"`
-	DogeAddress string  `json:"dogeAddress"`
-	Size        string  `json:"size"`
-	BName       string  `json:"bname"`
-	BEmail      string  `json:"bemail"`
-	BCountry    string  `json:"bcountry"`
-	BAddress    string  `json:"baddress"`
-	BPostalCode string  `json:"bpostalCode"`
-	Amount      float64 `json:"amount"`
-	Sku         string  `json:"sku"`
-}
 
 type EmailRequest struct {
 	ReplyToEmail string `json:"reply_to_email"`
@@ -75,7 +59,7 @@ func RegisterHandler(cfg config.Config) http.HandlerFunc {
 			return
 		}
 
-		var req RegistrationRequest
+		var req models.RegistrationRequest // Use models.RegistrationRequest
 		err := json.NewDecoder(r.Body).Decode(&req)
 		if err != nil {
 			http.Error(w, "Wow! Invalid JSON", http.StatusBadRequest)
@@ -137,12 +121,7 @@ func RegisterHandler(cfg config.Config) http.HandlerFunc {
 		req.PaytoDogeAddress = invoice.ID
 
 		// Store in database
-		_, err = database.InsertShibe(db, RegistrationRequest{
-			Name: req.Name, Email: req.Email, Country: req.Country, Address: req.Address,
-			PostalCode: req.PostalCode, DogeAddress: req.DogeAddress, Size: req.Size,
-			BName: req.BName, BEmail: req.BEmail, BCountry: req.BCountry, BAddress: req.BAddress,
-			BPostalCode: req.BPostalCode, Amount: req.Amount, PaytoDogeAddress: req.PaytoDogeAddress,
-		})
+		_, err = database.InsertShibe(db, req)
 		if err != nil {
 			log.Printf("Much Sad! DB error: %v", err)
 			http.Error(w, "Such Sad! Failed to save", http.StatusInternalServerError)
