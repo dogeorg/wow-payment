@@ -1,11 +1,11 @@
 # Wow-Payment
 
-Wow Payment is a Golang payment registration service that stores user details in SQLite, integrates with GigaWallet for Dogecoin payments, and sends email notifications via much-sender.
+Wow Payment is a registration service that stores user details in SQLite, integrates with GigaWallet for Dogecoin payments, and sends email notifications via much-sender.
 
 ## Features
 - Accepts JSON POST requests for user registration
 - Stores user data in SQLite database
-- Creates GigaWallet accounts and invoices for Dogecoin payments
+- Creates GigaWallet accounts and invoices with admin authentication
 - Returns GigaWallet invoice details in JSON response
 - Sends email notifications through much-sender
 - Configurable via TOML file

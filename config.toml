@@ -1,0 +1,20 @@
+[server]
+port = 42002
+
+[database]
+path = "wow_payment.db"
+
+[emailservice]
+host = "http://localhost"
+port = 42001
+bearertoken = "such-secure-token-here"
+replytoname = "Such Shibe"
+replytoemail = "shibe@localhost"
+subject = "Much Wow!"
+
+[gigawallet]
+host = "http://localhost"
+adminport = 420
+pubport = 69
+adminbearertoken = "your-admin-secret-token"
+pubbearertoken = "your-public-secret-token"
