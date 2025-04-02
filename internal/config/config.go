@@ -13,14 +13,14 @@ type Config struct {
 	Database struct {
 		Path string `toml:"path"`
 	} `toml:"database"`
-	EmailService struct {
+	MuchSender struct {
 		Host         string `toml:"host"`
 		Port         int    `toml:"port"`
 		BearerToken  string `toml:"bearertoken"`
 		ReplyToName  string `toml:"replytoname"`
 		ReplyToEmail string `toml:"replytoemail"`
 		Subject      string `toml:"subject"`
-	} `toml:"emailservice"`
+	} `toml:"muchsender"`
 	GigaWallet struct {
 		Host             string `toml:"host"`
 		AdminPort        int    `toml:"adminport"`

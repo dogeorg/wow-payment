@@ -59,7 +59,7 @@ func RegisterHandler(cfg config.Config) http.HandlerFunc {
 			return
 		}
 
-		var req models.RegistrationRequest // Use models.RegistrationRequest
+		var req models.RegistrationRequest
 		err := json.NewDecoder(r.Body).Decode(&req)
 		if err != nil {
 			http.Error(w, "Wow! Invalid JSON", http.StatusBadRequest)
@@ -130,17 +130,17 @@ func RegisterHandler(cfg config.Config) http.HandlerFunc {
 
 		// Send email via much-sender
 		emailReq := EmailRequest{
-			ReplyToEmail: cfg.EmailService.ReplyToEmail,
-			ReplyToName:  cfg.EmailService.ReplyToName,
+			ReplyToEmail: cfg.MuchSender.ReplyToEmail,
+			ReplyToName:  cfg.MuchSender.ReplyToName,
 			ToEmail:      req.Email,
 			ToName:       req.Name,
-			Subject:      cfg.EmailService.Subject,
+			Subject:      cfg.MuchSender.Subject,
 			HTML:         fmt.Sprintf("<h1>Much Wow!</h1><p>Welcome %s! Pay %.2f DOGE to %s for %s</p>", req.Name, req.Amount, req.PaytoDogeAddress, req.Sku),
 		}
 		emailJSON, _ := json.Marshal(emailReq)
-		emailURL := fmt.Sprintf("%s:%d/send-email", cfg.EmailService.Host, cfg.EmailService.Port)
+		emailURL := fmt.Sprintf("%s:%d/send-email", cfg.MuchSender.Host, cfg.MuchSender.Port)
 		emailReqHTTP, _ := http.NewRequest("POST", emailURL, bytes.NewBuffer(emailJSON))
-		emailReqHTTP.Header.Set("Authorization", "Bearer "+cfg.EmailService.BearerToken)
+		emailReqHTTP.Header.Set("Authorization", "Bearer "+cfg.MuchSender.BearerToken)
 		emailReqHTTP.Header.Set("Content-Type", "application/json")
 		emailResp, err := client.Do(emailReqHTTP)
 		if err != nil || emailResp.StatusCode != http.StatusOK {

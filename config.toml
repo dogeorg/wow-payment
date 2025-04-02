@@ -4,7 +4,7 @@ port = 42002
 [database]
 path = "wow_payment.db"
 
-[emailservice]
+[muchsender]
 host = "http://localhost"
 port = 42001
 bearertoken = "such-secure-token-here"
